@@ -14,7 +14,7 @@ export default function PostPageAdd() {
 
 
   async function addPost() {
-  await addDoc(collection(db,"posts", {caption,image}));
+  await addDoc(collection(db,"posts"), {caption,image});
   navigate("/");
   }
   useEffect(() => {
