@@ -16,7 +16,11 @@ export default function PostPageDetails() {
     const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
 
-    async function deletePost(id) { }
+    async function deletePost(id) { 
+      await deleteDoc(doc(db, "posts", id));
+
+    navigate("/");
+    }
 
     async function getPost(id) {
         const postDocument = await getDoc(doc(db, "posts", id));
