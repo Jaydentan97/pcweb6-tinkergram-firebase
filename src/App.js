@@ -12,8 +12,8 @@ function App(){
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<PostPageHome/>}/>
-      <Route path="/" element={<LoginPage/>}/>
-      <Route path="/" element={<SignupPage/>}/>
+      <Route path="/login" element={<LoginPage/>}/>
+      <Route path="/signup" element={<SignupPage/>}/>
       <Route path = "/add" element ={<PostPageAdd/>} />
       <Route path = "/post/:id" element ={<PostPageDetails/>}/>
       <Route path = "/update/:id" element ={<PostPageUpdate/>} />
