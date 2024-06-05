@@ -6,11 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { auth, db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-
-
-
 export default function PostPageAdd() {
     const [caption, setCaption] = useState("");
+    const [description, setDescription] = useState("");
+    const [condition, setCondition] = useState("");
+    const [price, setPrice] = useState(""); // State for price
     const [image, setImage] = useState("");
     const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
@@ -20,11 +20,11 @@ export default function PostPageAdd() {
         const imageReference = ref(storage, `images/${image.name}`);
         const response = await uploadBytes(imageReference, image);
         const imageUrl = await getDownloadURL(response.ref);
-        await addDoc(collection(db, "posts"), { caption, image: imageUrl });
+        await addDoc(collection(db, "posts"), { caption, description, condition, price, image: imageUrl });
 
-        //await addDoc(collection(db, "posts"), { caption, image });
         navigate("/");
     }
+
     useEffect(() => {
         if (loading) return;
         if (!user) return navigate("/login");
@@ -32,7 +32,6 @@ export default function PostPageAdd() {
 
     return (
         <>
-            {}
             <Container>
                 <h1 style={{ marginBlock: "1rem" }}>Add Post</h1>
                 <Form>
@@ -42,7 +41,37 @@ export default function PostPageAdd() {
                             type="text"
                             placeholder="Lovely day"
                             value={caption}
-                            onChange={(text) => setCaption(text.target.value)}
+                            onChange={(e) => setCaption(e.target.value)}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="description">
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            placeholder="Add a description..."
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="condition">
+                        <Form.Label>Condition</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Add a condition..."
+                            value={condition}
+                            onChange={(e) => setCondition(e.target.value)}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="price">
+                        <Form.Label>Price</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Add a price..."
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
                         />
                     </Form.Group>
 
@@ -56,13 +85,8 @@ export default function PostPageAdd() {
                     <Form.Group className="mb-3" controlId="image">
                         <Form.Label>Local Image File</Form.Label>
                         <Form.Control
-                            // type="text"
-                            // placeholder="https://zca.sg/img/1"
-                            // value={image}
-                            // onChange={(text) => setImage(text.target.value)}
                             type="file"
                             onChange={(e) => {
-                                //setImage(e.target.files[0]);
                                 const imageFile = e.target.files[0];
                                 const previewImage = URL.createObjectURL(imageFile);
                                 setImage(imageFile);
@@ -70,11 +94,11 @@ export default function PostPageAdd() {
                             }}
                         />
                         <Form.Text className="text-muted">
-                            Make sure the url has a image type at the end: jpg, jpeg, png.
+                            Make sure the url has an image type at the end: jpg, jpeg, png.
                         </Form.Text>
                     </Form.Group>
 
-                    <Button variant="primary" onClick={async (e) => addPost()}>
+                    <Button variant="primary" onClick={addPost}>
                         Submit
                     </Button>
                 </Form>
