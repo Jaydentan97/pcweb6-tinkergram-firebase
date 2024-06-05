@@ -10,9 +10,9 @@ export default function PostPageUpdate() {
     const params = useParams();
     const id = params.id;
     const [caption, setCaption] = useState("");
-    const [description, setDescription] = useState(""); // State for description
-    const [condition, setCondition] = useState(""); // State for condition
-    const [price, setPrice] = useState(""); // State for price
+    const [description, setDescription] = useState(""); 
+    const [condition, setCondition] = useState(""); 
+    const [price, setPrice] = useState(""); 
     const [image, setImage] = useState("");
     const [previewImage, setPreviewImage] = useState("https://zca.sg/img/placeholder");
     const [user, loading] = useAuthState(auth);

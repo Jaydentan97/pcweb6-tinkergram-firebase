@@ -10,7 +10,7 @@ export default function PostPageAdd() {
     const [caption, setCaption] = useState("");
     const [description, setDescription] = useState("");
     const [condition, setCondition] = useState("");
-    const [price, setPrice] = useState(""); // State for price
+    const [price, setPrice] = useState(""); 
     const [image, setImage] = useState("");
     const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();

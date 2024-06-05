@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Container, Image, Nav, Navbar, Row, Col } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Container, Image, Nav, Navbar, Row, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
@@ -30,6 +30,7 @@ export default function PostPageHome() {
                     <Navbar.Brand href="/">Tinkergram</Navbar.Brand>
                     <Nav>
                         <Nav.Link href="/add">New Post</Nav.Link>
+                        <Link to="/feedback"><Button>Customer Feedback</Button></Link> {/* Add the button here */}
                     </Nav>
                 </Container>
             </Navbar>
