@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Container, Image, Nav, Navbar, Row, Button } from "react-bootstrap";
+import { Container, Image, Nav, Navbar, Row, Button, Form, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faEnvelope, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 export default function PostPageHome() {
     const [posts, setPosts] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     async function getAllPosts() {
         const query = await getDocs(collection(db, "posts"));
@@ -25,6 +26,15 @@ export default function PostPageHome() {
         return posts.map((post, index) => <ImageSquare key={index} post={post} />);
     };
 
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+       
+    };
+
     return (
         <>
             <Navbar variant="light" bg="light">
@@ -33,6 +43,18 @@ export default function PostPageHome() {
                         <FontAwesomeIcon icon={faShoppingCart} style={{ marginRight: '0.5rem' }} />
                         RRRSell
                     </Navbar.Brand>
+                    <Form className="d-flex mx-auto" style={{ width: '50%' }} onSubmit={handleSearchSubmit}>
+                        <FormControl
+                            type="search"
+                            placeholder="Search for anything and everything"
+                            className="me-2"
+                            aria-label="Search"
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            style={{ width: 'calc(100% - 3rem)' }}
+                        />
+                        <Button type="submit" variant="success"><FontAwesomeIcon icon={faSearch} /></Button>
+                    </Form>
                     <Nav>
                         <Link to="/add">
                             <Button style={{ backgroundColor: 'red', borderColor: 'red' }}>New Posting</Button>
@@ -85,9 +107,9 @@ function ImageSquare({ post }) {
                 />
             </Link>
             <div>
-                <p style={{ fontSize: '0.8rem', margin: '0.2rem 0' }}>{caption}</p> {/* Smaller font size and reduced margin */}
-                <p style={{ fontSize: '0.8rem', margin: '0.2rem 0' }}>Condition: {condition}</p> {/* Smaller font size and reduced margin */}
-                <p style={{ fontSize: '0.8rem', margin: '0.2rem 0' }}>Price: {price}</p> {/* Smaller font size and reduced margin */}
+                <p style={{ fontSize: '0.8rem', margin: '0.2rem 0' }}>{caption}</p> 
+                <p style={{ fontSize: '0.8rem', margin: '0.2rem 0' }}>Condition: {condition}</p> 
+                <p style={{ fontSize: '0.8rem', margin: '0.2rem 0' }}>Price: {price}</p> 
             </div>
         </Container>
     );

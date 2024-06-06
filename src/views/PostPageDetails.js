@@ -21,6 +21,28 @@ export default function PostPageDetails() {
         navigate("/");
     }
 
+    function renderEditDelete() {
+        const currentUserID = user.uid
+        
+        if (currentUserID === "XPyih2gHUudDPOCihHeTybRScN53") {
+            return (
+                <>
+                    <Card.Link href={`/update/${id}`}>Edit</Card.Link>
+                    <Card.Link
+                        onClick={() => deletePost(id)}
+                        style={{ cursor: "pointer" }}
+                    >
+                        Delete
+                    </Card.Link>
+                </>
+            );
+        } else {
+            return null;
+        }
+    }
+    
+    
+    
     async function getPost(id) {
         const postDocument = await getDoc(doc(db, "posts", id));
         const post = postDocument.data();
@@ -51,13 +73,7 @@ export default function PostPageDetails() {
                                 <Card.Text><strong>Description:</strong> {description}</Card.Text>
                                 <Card.Text><strong>Condition:</strong> {condition}</Card.Text>
                                 <Card.Text><strong>Price:</strong> {price}</Card.Text>
-                                <Card.Link href={`/update/${id}`}>Edit</Card.Link>
-                                <Card.Link
-                                    onClick={() => deletePost(id)}
-                                    style={{ cursor: "pointer" }}
-                                >
-                                    Delete
-                                </Card.Link>
+                                {renderEditDelete()}
                             </Card.Body>
                         </Card>
                     </Col>
